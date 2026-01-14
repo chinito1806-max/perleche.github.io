@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para ti ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #f5e8dc, #f0c6b4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Georgia', serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 25px;
+      width: 85%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,.2);
+      animation: fadeIn 2s ease;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #5c4033;
+      margin-bottom: 15px;
+    }
+
+    p {
+      color: #7a4a3b;
+      font-size: 18px;
+      line-height: 1.6;
+      min-height: 80px;
+    }
+
+    button {
+      margin-top: 20px;
+      background: #5c4033;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      background: #7a4a3b;
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,.2);
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff6b81;
+      animation: float 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(100vh) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Para ti ❤️</h1>
+    <p id="text"></p>
+    <button onclick="showLove()">Toca aquí 💖</button>
+  </div>
+
+  <audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const message =
+      "No sabía cómo decirte esto...\n\n" +
+      "Así que decidí hacerlo de una forma diferente.\n\n" +
+      "Gracias por estar, por sonreír,\n" +
+      "y por hacer mis días mejores 💕";
+
+    let index = 0;
+    const speed = 50;
+    const textElement = document.getElementById("text");
+
+    function typeWriter() {
+      if (index < message.length) {
+        textElement.innerHTML += message.charAt(index) === "\n" ? "<br>" : message.charAt(index);
+        index++;
+        setTimeout(typeWriter, speed);
+      }
+    }
+
+    function showLove() {
+      const music = document.getElementById("music");
+      music.play().catch(()=>{});
+
+      index = 0;
+      textElement.innerHTML = "";
+      const newMessage =
+        "Te quería decir que...\n\n" +
+        "Me importas muchísimo ❤️\n" +
+        "Te quiero mucho 💖";
+
+      let i = 0;
+      function writeNew() {
+        if (i < newMessage.length) {
+          textElement.innerHTML += newMessage.charAt(i) === "\n" ? "<br>" : newMessage.charAt(i);
+          i++;
+          setTimeout(writeNew, speed);
+        }
+      }
+      writeNew();
+    }
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 500);
+
+    window.onload = () => {
+      index = 0;
+      textElement.innerHTML = "";
+      typeWriter();
+    };
+  </script>
+
+</body>
+</html>
